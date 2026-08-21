@@ -13,7 +13,7 @@ An AI-assisted food preparation and demand prediction system for institutional k
 ## 🔗 Quick Repository & Web Links
 
 * **GitHub Repository URL**: [https://github.com/prakashrajr22/the-untames](https://github.com/prakashrajr22/the-untames)
-* **Local Web Application URL**: `http://127.0.0.1:5000`
+* **Local Web Application URL**:[http://127.0.0.1:5000](http://127.0.0.1:5000)
 * **Google Form Feedback Link**: [https://docs.google.com/forms/d/e/1FAIpQLScVxIq9EXUaPDyEdDQpfR5pVjTLw1XFhqzwmDPebxRvn4ON8g/viewform?usp=publish-editor](https://docs.google.com/forms/d/e/1FAIpQLScVxIq9EXUaPDyEdDQpfR5pVjTLw1XFhqzwmDPebxRvn4ON8g/viewform?usp=publish-editor)
 
 ---
