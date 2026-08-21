@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Food Prep System - Demand Prediction Dashboard</title>
+    <meta name="description" content="AI-assisted food preparation and demand prediction dashboard for institutional kitchen administrators.">
+    <!-- Google Fonts for Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Outer Container -->
+    <div class="app-container">
+        
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <img src="assets/logo.png" alt="AI Food Prep System Logo" class="header-logo">
+            </div>
+            
+            <div class="header-center">
+                <h1 class="header-title">AI FOOD PREP SYSTEM</h1>
+            </div>
+            
+            <div class="header-right">
+                <!-- Notification Bell -->
+                <div class="notif-wrapper" id="notifWrapper">
+                    <button class="notif-btn" id="notifBtn" aria-label="Notifications" title="Notifications">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notif-badge hidden" id="notifBadge">1</span>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div class="notif-dropdown hidden" id="notifDropdown">
+                        <div class="notif-header">
+                            <span class="notif-title">🔔 AI OUTPUT READY</span>
+                            <button class="notif-close-btn" id="notifCloseBtn">&times;</button>
+                        </div>
+                        <div class="notif-content" id="notifContent">
+                            <p class="notif-empty">No active predictions generated yet. Click the cooking vessel to start.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Admin Profile -->
+                <div class="admin-profile">
+                    <img src="assets/admin.png" alt="Administrator Profile" class="admin-avatar">
+                    <div class="admin-details">
+                        <span class="admin-id">ADMIN-001</span>
+                        <span class="admin-role">Superintendent</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD BODY (Sidebar + Main Content) -->
+        <div class="dashboard-body">
+            
+            <!-- SIDEBAR -->
+            <aside class="app-sidebar">
+                <nav class="sidebar-nav">
+                    <ul class="nav-list">
+                        <li>
+                            <button class="nav-item-btn" id="btnFeedback">
+                                <span class="nav-icon">🔶</span>
+                                <span class="nav-label">Feedback</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nav-item-btn" id="btnHistory">
+                                <span class="nav-icon">🔶</span>
+                                <span class="nav-label">History</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="nav-item-btn" id="btnCookinCheck">
+                                <span class="nav-icon">🔶</span>
+                                <span class="nav-label">Cookin Check</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer-menu">
+                    <button class="sidebar-link-btn" id="btnHelp">[ Help? ]</button>
+                    <button class="sidebar-link-btn" id="btnSettings">[ Settings ⚙️ ]</button>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT AREA -->
+            <main class="main-content">
+                
+                <!-- WELCOME SECTION -->
+                <div class="welcome-header">
+                    <h2 class="welcome-text">Welcome</h2>
+                </div>
+
+                <!-- RIBBONS CONTAINER -->
+                <div class="ribbons-container">
+                    
+                    <!-- DATE RIBBON -->
+                    <div class="ribbon date-ribbon">
+                        <div class="ribbon-content">
+                            <span class="ribbon-label">DATE:</span>
+                            <div class="date-input-wrapper">
+                                <input type="date" id="datePicker" class="ribbon-date-input">
+                            </div>
+                            <span class="ribbon-day" id="dayDisplay">Friday</span>
+                        </div>
+                    </div>
+
+                    <!-- ATTENDANCE RIBBON -->
+                    <div class="ribbon attendance-ribbon">
+                        <div class="ribbon-content">
+                            <span class="ribbon-label">NO. OF PRESENT:</span>
+                            <span class="attendance-count" id="attendanceCount">720</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- LARGE PAPER AREA (WORK CANVAS) -->
+                <section class="paper-work-area" id="paperArea">
+                    <div class="paper-header-texture"></div>
+
+                    <div class="paper-split-layout">
+                        
+                        <!-- LEFT: COOKING VESSEL (INPUT) -->
+                        <div class="vessel-section">
+                            <div class="section-badge">INPUT</div>
+                            
+                            <!-- Vector HTML/CSS Cooking Vessel -->
+                            <div class="vessel-container" id="vesselContainer" role="button" tabindex="0" title="Click to add menu items">
+                                <div class="vessel-lid">
+                                    <div class="vessel-lid-knob"></div>
+                                </div>
+                                <div class="vessel-rim"></div>
+                                <div class="vessel-body">
+                                    <div class="vessel-handle left-handle"></div>
+                                    <div class="vessel-handle right-handle"></div>
+                                    <div class="vessel-badge">
+                                        <span class="vessel-emoji">🍲</span>
+                                        <span class="vessel-label">MENU</span>
+                                    </div>
+                                    <div class="vessel-steam steam-1">~</div>
+                                    <div class="vessel-steam steam-2">~</div>
+                                </div>
+                                <div class="vessel-base"></div>
+                            </div>
+
+                            <p class="vessel-caption">Click vessel to add items</p>
+                        </div>
+
+                        <!-- RIGHT: STOVE (OUTPUT) -->
+                        <div class="stove-section">
+                            <div class="section-badge">OUTPUT</div>
+
+                            <!-- Vector HTML/CSS Cooking Stove -->
+                            <div class="stove-container" id="stoveContainer">
+                                
+                                <!-- Stove Flames -->
+                                <div class="stove-flames-container hidden" id="stoveFlames">
+                                    <span class="flame flame-1">🔥</span>
+                                    <span class="flame flame-2">🔥</span>
+                                    <span class="flame flame-3">🔥</span>
+                                </div>
+
+                                <!-- Stove Top & Burner -->
+                                <div class="stove-top">
+                                    <div class="stove-burner-grate">
+                                        <div class="burner-ring"></div>
+                                        <div class="burner-core"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Stove Body -->
+                                <div class="stove-body">
+                                    <div class="stove-brand">SMARTSTOVE AI</div>
+                                    
+                                    <!-- Embedded Stove Display Screen -->
+                                    <div class="stove-display-screen" id="stoveDisplay">
+                                        <div class="stove-idle-state" id="stoveIdle">
+                                            <p class="idle-text">Awaiting Menu Input...</p>
+                                            <p class="idle-subtext">Click the cooking vessel on the left to analyze food demand.</p>
+                                        </div>
+                                        <div class="stove-active-state hidden" id="stoveActive">
+                                            <!-- Dynamically populated output -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Stove Controls -->
+                                    <div class="stove-controls">
+                                        <div class="stove-knob knob-1" title="Power Control"></div>
+                                        <div class="stove-knob knob-2 active" id="stoveKnob" title="AI Auto Control"></div>
+                                        <div class="stove-indicator" id="stoveIndicator"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Stove Legs -->
+                                <div class="stove-legs">
+                                    <div class="leg left-leg"></div>
+                                    <div class="leg right-leg"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- AI Analyzing Overlay inside Paper Area -->
+                    <div class="ai-overlay hidden" id="aiOverlay">
+                        <div class="ai-overlay-card">
+                            <div class="ai-robot-icon">🤖</div>
+                            <h3 class="ai-status-title">AI ANALYSING...</h3>
+                            <p class="ai-status-detail">Processing Attendance (720) + Menu Items + Historical Patterns</p>
+                            <div class="ai-progress-bar">
+                                <div class="ai-progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <span class="footer-title">AI FOOD PREP SYSTEM</span>
+                <span class="footer-contact">Contact: <a href="mailto:smartmess.ai@gmail.com">smartmess.ai@gmail.com</a></span>
+                <span class="footer-copy">&copy; 2026 AI Food Prep System</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!--                       MODAL DIALOGS                          -->
+    <!-- ============================================================ -->
+
+    <!-- 1. COOKING VESSEL MENU ITEMS MODAL (Paper Note Style) -->
+    <div class="modal-backdrop hidden" id="vesselModal">
+        <div class="paper-modal-card">
+            <div class="paper-modal-header">
+                <h3 class="paper-modal-title">🍲 ADD MENU ITEMS</h3>
+                <button class="modal-close-icon" id="closeVesselModal">&times;</button>
+            </div>
+            
+            <p class="paper-modal-subtitle">Enter today's planned food items and base quantities for AI optimization.</p>
+
+            <form id="menuItemsForm" onsubmit="return false;">
+                <div class="menu-items-list" id="menuItemsList">
+                    <!-- Dynamic Item Rows populated by JS -->
+                </div>
+
+                <div class="modal-actions-row">
+                    <button type="button" class="btn-secondary" id="btnAddRow">+ ADD ITEM</button>
+                    <button type="button" class="btn-primary" id="btnSubmitMenu">[ ADD ]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. FEEDBACK MODAL -->
+    <div class="modal-backdrop hidden" id="feedbackModal">
+        <div class="paper-modal-card">
+            <div class="paper-modal-header">
+                <h3 class="paper-modal-title">💬 FEEDBACK HISTORY</h3>
+                <button class="modal-close-icon" id="closeFeedbackModal">&times;</button>
+            </div>
+            
+            <div class="modal-body-content">
+                <ul class="feedback-bullet-list">
+                    <li>• Dosa quantity was sufficient</li>
+                    <li>• Idli demand increased</li>
+                    <li>• Rice quantity can be reduced</li>
+                    <li>• Students preferred dosa today</li>
+                </ul>
+
+                <div class="google-form-section">
+                    <p class="gform-text">Have new feedback from today's meal service?</p>
+                    <button class="btn-primary gform-btn" id="btnOpenGForm">
+                        📋 SUBMIT GOOGLE FORM FEEDBACK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. HISTORY MODAL -->
+    <div class="modal-backdrop hidden" id="historyModal">
+        <div class="paper-modal-card">
+            <div class="paper-modal-header">
+                <h3 class="paper-modal-title">📜 PREVIOUS AI OUTPUT HISTORY</h3>
+                <button class="modal-close-icon" id="closeHistoryModal">&times;</button>
+            </div>
+            
+            <div class="modal-body-content">
+                <div class="history-cards-list" id="historyList">
+                    <!-- Loaded from JS mock data -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. COOKIN CHECK MODAL -->
+    <div class="modal-backdrop hidden" id="cookinCheckModal">
+        <div class="paper-modal-card">
+            <div class="paper-modal-header">
+                <h3 class="paper-modal-title">🍳 COOKIN CHECK - ITEM HISTORY</h3>
+                <button class="modal-close-icon" id="closeCookinCheckModal">&times;</button>
+            </div>
+            
+            <div class="modal-body-content">
+                <div class="cookin-check-group">
+                    <h4 class="group-heading">TODAY'S ITEMS</h4>
+                    <div class="items-chip-list">
+                        <span class="item-chip">Rice</span>
+                        <span class="item-chip">Dal</span>
+                        <span class="item-chip">Vegetables</span>
+                        <span class="item-chip">Oil</span>
+                    </div>
+                </div>
+
+                <div class="cookin-check-group">
+                    <h4 class="group-heading">PREVIOUS ITEMS</h4>
+                    <div class="items-chip-list">
+                        <span class="item-chip muted">Rice</span>
+                        <span class="item-chip muted">Idli batter</span>
+                        <span class="item-chip muted">Dosa batter</span>
+                        <span class="item-chip muted">Vegetables</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. HELP MODAL -->
+    <div class="modal-backdrop hidden" id="helpModal">
+        <div class="paper-modal-card">
+            <div class="paper-modal-header">
+                <h3 class="paper-modal-title">❓ SYSTEM HELP & WORKFLOW GUIDE</h3>
+                <button class="modal-close-icon" id="closeHelpModal">&times;</button>
+            </div>
+            
+            <div class="modal-body-content">
+                <ol class="help-steps-list">
+                    <li><span class="step-num">1</span> <strong>Select Date:</strong> Pick the date from the date ribbon. The day of the week is calculated automatically.</li>
+                    <li><span class="step-num">2</span> <strong>Biometric Attendance:</strong> Real-time headcount (e.g., 720) is fetched automatically from attendance systems.</li>
+                    <li><span class="step-num">3</span> <strong>Click Vessel:</strong> Click the 🍲 Cooking Vessel on the paper workspace to open the menu input sheet.</li>
+                    <li><span class="step-num">4</span> <strong>Enter Menu:</strong> Add items and base quantities, then click <strong>[ ADD ]</strong>.</li>
+                    <li><span class="step-num">5</span> <strong>AI Analysis:</strong> System processes attendance, day pattern, feedback history, and menu items.</li>
+                    <li><span class="step-num">6</span> <strong>Stove Output:</strong> The stove ignites 🔥 and presents recommended portion quantities directly on its screen.</li>
+                    <li><span class="step-num">7</span> <strong>Notification:</strong> The top 🔔 notification updates instantly with the final demand breakdown.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. SETTINGS MODAL -->
+    <div class="modal-backdrop hidden" id="settingsModal">
+        <div class="paper-modal-card">
+            <div class="paper-modal-header">
+                <h3 class="paper-modal-title">⚙️ DASHBOARD SETTINGS</h3>
+                <button class="modal-close-icon" id="closeSettingsModal">&times;</button>
+            </div>
+            
+            <div class="modal-body-content">
+                <div class="setting-row">
+                    <span class="setting-label">🌙 Dark / Night Mode:</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggleDarkMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-label">🔤 Font Size:</span>
+                    <select id="fontSizeSelect" class="setting-select">
+                        <option value="normal" selected>Normal</option>
+                        <option value="large">Large</option>
+                        <option value="xlarge">Extra Large</option>
+                    </select>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-label">📄 Page Appearance:</span>
+                    <select id="appearanceSelect" class="setting-select">
+                        <option value="paper" selected>Classic Gold Paper</option>
+                        <option value="smooth">Smooth Modern</option>
+                    </select>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-label">🔔 Notifications:</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggleNotifications" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <span class="setting-label">🔥 Animations (Stove & Vessel):</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggleAnimations" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
